@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PTE General Practice Studio</title>
+<meta name="description" content="PTE General Practice Studio">
+<style>
+:root{
+  --bg:#f4f6fb;--card:#fff;--text:#172033;--muted:#687386;--line:#e5e9f0;
+  --primary:#4f46e5;--primary2:#7c3aed;--soft:#eef2ff;--green:#059669;
+  --shadow:0 12px 32px rgba(31,41,55,.07)
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif}
+button{font:inherit}
+.top{height:76px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:30}
+.brand{display:flex;align-items:center;gap:12px;font-size:21px;font-weight:800}
+.logo{width:45px;height:45px;border-radius:14px;background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;display:grid;place-items:center;font-size:23px;box-shadow:0 7px 18px #4f46e52e}
+.status{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px}
+.statusDot{width:9px;height:9px;border-radius:50%;background:#f59e0b}.statusDot.ok{background:#10b981}.statusDot.bad{background:#ef4444}
+.layout{display:grid;grid-template-columns:235px minmax(0,1fr);min-height:calc(100vh - 76px)}
+aside{background:#fff;border-right:1px solid var(--line);padding:18px 14px}
+.navTitle{padding:12px 11px 7px;color:#9aa2af;font-size:10px;font-weight:800;letter-spacing:.11em;text-transform:uppercase}
+.nav{padding:12px;border-radius:12px;margin:4px 0;color:#526074;cursor:pointer;display:flex;gap:9px;align-items:center;transition:.15s}
+.nav:hover,.nav.active{background:var(--soft);color:var(--primary);font-weight:750}
+.nav.disabled{opacity:.48;cursor:default}
+.nav small{margin-left:auto;font-size:9px}
+main{max-width:1480px;width:100%;margin:auto;padding:30px}
+.hero{background:linear-gradient(135deg,#312e81 0%,#5b21b6 55%,#7c3aed 100%);color:#fff;border-radius:27px;padding:34px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;width:340px;height:340px;border:70px solid rgba(255,255,255,.055);border-radius:50%;right:-130px;top:-190px}
+.heroContent{position:relative;z-index:1;max-width:850px}
+.hero h1{margin:0 0 9px;font-size:35px;line-height:1.15}
+.hero p{margin:0;color:#ddd6fe;line-height:1.65;font-size:14px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:21px}
+.btn{border:0;border-radius:12px;padding:12px 17px;font-weight:750;cursor:pointer}
+.btn.light{background:#fff;color:#4338ca}.btn.ghost{background:#ffffff16;color:#fff;border:1px solid #ffffff2e}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0}
+.stat{background:#fff;border:1px solid var(--line);border-radius:19px;padding:19px 20px;box-shadow:var(--shadow)}
+.stat small{color:var(--muted);font-size:12px}.stat b{display:block;font-size:29px;margin-top:5px}
+.sectionHead{display:flex;justify-content:space-between;align-items:end;margin:27px 0 14px}
+.sectionHead h2{margin:0;font-size:22px}.sectionHead p{margin:5px 0 0;color:var(--muted);font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
+.module{background:#fff;border:1px solid var(--line);border-radius:20px;padding:19px;box-shadow:var(--shadow)}
+.moduleTop{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.moduleIcon{width:49px;height:49px;border-radius:15px;background:var(--soft);display:grid;place-items:center}
+.moduleIcon svg{width:27px;height:27px}
+.module h3{margin:0 0 4px;font-size:17px}.module p{margin:0;color:var(--muted);font-size:12px}
+.items{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.item{min-height:42px;display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:#fafbfe;border-radius:12px;padding:9px 10px;cursor:pointer;color:#344054;transition:.15s}
+.item:hover:not(.disabled){border-color:#c7d2fe;background:#f5f7ff;color:var(--primary);transform:translateY(-1px)}
+.item.disabled{opacity:.48;cursor:default}.itemIcon{width:20px;text-align:center}
+.badge{margin-left:auto;font-size:9px;color:#64748b;background:#f1f5f9;padding:4px 7px;border-radius:20px;white-space:nowrap}
+.badge.live{color:#047857;background:#d1fae5}
+.phase{margin-top:20px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--shadow)}
+.phaseGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:15px}
+.phaseCard{padding:14px;border:1px solid var(--line);border-radius:14px;background:#fafbfe}
+.phaseCard.active{border-color:#c7d2fe;background:#eef2ff}.phaseNo{font-size:11px;font-weight:800;color:var(--primary)}
+.phaseCard strong{display:block;font-size:13px;margin-top:3px}.phaseCard span{display:block;color:var(--muted);font-size:11px;line-height:1.45;margin-top:5px}
+.progress{margin-top:20px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--shadow)}
+.progressRow{display:flex;justify-content:space-between;font-size:13px}.bar{height:9px;background:#edf0f5;border-radius:20px;overflow:hidden;margin-top:10px}.fill{height:100%;width:0;background:linear-gradient(90deg,var(--primary),var(--primary2));transition:.5s}
+.info{margin-top:12px;color:var(--muted);font-size:12px;line-height:1.6}
+.footer{text-align:center;color:#9ca3af;font-size:12px;padding:28px}
+.toast{position:fixed;right:20px;bottom:20px;background:#111827;color:#fff;padding:14px 17px;border-radius:13px;display:none;z-index:100;max-width:390px;box-shadow:0 15px 35px #0003}
+@media(max-width:950px){.layout{grid-template-columns:1fr}aside{display:none}.grid,.stats{grid-template-columns:1fr}.phaseGrid{grid-template-columns:1fr 1fr}main{padding:18px}}
+@media(max-width:560px){.items,.phaseGrid{grid-template-columns:1fr}.top{padding:0 15px}.hero{padding:25px}.hero h1{font-size:28px}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><div class="logo">P</div><span>PTE General Practice</span></div>
+  <div class="status"><span id="statusDot" class="statusDot"></span><span id="statusText">Connecting...</span></div>
+</header>
+
+<div class="layout">
+<aside>
+  <div class="navTitle">Main</div>
+  <div class="nav active" data-target="dashboard">🏠 Dashboard</div>
+  <div class="nav" data-target="modules">🎯 All Modules</div>
+  <div class="nav" data-target="progress">📊 My Progress</div>
+  <div class="navTitle">Tests</div>
+  <div class="nav disabled">📝 Full Mock Test <small>Later</small></div>
+</aside>
+
+<main>
+<section id="dashboard" class="hero">
+  <div class="heroContent">
+    <h1>Build Better English. Practice Smarter.</h1>
+    <p>One clean practice platform for Speaking, Reading, Listening, Writing, Grammar and Vocabulary. Each module is connected independently so future phases can be added without changing this dashboard.</p>
+    <div class="actions">
+      <button class="btn light" id="readBtn">📖 Start Read Aloud</button>
+      <button class="btn ghost" data-target="modules">Explore All Modules</button>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="stat"><small>Practice Attempts</small><b id="attempts">0</b></div>
+  <div class="stat"><small>Average Score</small><b id="avg">—</b></div>
+  <div class="stat"><small>Best Score</small><b id="best">—</b></div>
+</section>
+
+<section id="modules">
+  <div class="sectionHead"><div><h2>Practice Areas</h2><p>Complete PTE General roadmap</p></div></div>
+  <div id="grid" class="grid"></div>
+</section>
+
+<section class="phase">
+  <div class="sectionHead" style="margin:0">
+    <div><h2>Development Roadmap</h2><p>New modules can be activated one at a time</p></div>
+  </div>
+  <div class="phaseGrid">
+    <div class="phaseCard active"><div class="phaseNo">PHASE 1</div><strong>Common Framework</strong><span>Dashboard, navigation, backend connection, shared results and progress.</span></div>
+    <div class="phaseCard active"><div class="phaseNo">PHASE 2</div><strong>Speaking</strong><span>Read Aloud, Repeat Sentence, Describe Image, Retell Talk and Short Answer.</span></div>
+    <div class="phaseCard"><div class="phaseNo">PHASE 3</div><strong>Reading</strong><span>MCQ, Fill in the Blanks, Re-order Paragraphs and comprehension.</span></div>
+    <div class="phaseCard"><div class="phaseNo">PHASE 4+</div><strong>Listening & Writing</strong><span>Listening, Writing, Grammar, Vocabulary and final Mock Test.</span></div>
+  </div>
+</section>
+
+<section id="progress" class="progress">
+  <div class="sectionHead" style="margin:0 0 12px"><div><h2>Your Progress</h2><p>Shared Results foundation</p></div></div>
+  <div class="progressRow"><span id="progressLabel">Active practice modules</span><b id="progressCount">0</b></div>
+  <div class="bar"><div id="fill" class="fill"></div></div>
+  <div class="info">Every practice engine will use the same Results sheet. This keeps attempts, scores and future progress tracking in one place.</div>
+</section>
+
+<div class="footer">PTE General Practice Studio • New Project • Common Platform</div>
+</main>
+</div>
+<div id="toast" class="toast"></div>
+
+<script>
+const API_URL = 'https://script.google.com/macros/s/AKfycbyPim1-3rE00gpScZVczJ_bXluG7Iw3WT0Bl1Gm6xCHapRjjfgmZUaOnwDRHoN6pzIf/exec';
+
+/*
+ * Future page map. Do not remove these names when adding phases.
+ * A page becomes clickable only when it is activated below.
+ */
+const ROUTES = {
+  'read-aloud':'read-aloud.html',
+  'repeat-sentence':'repeat-sentence.html',
+  'describe-image':'describe-image.html',
+  'retell-talk':'retell-talk.html',
+  'short-answer':'short-answer.html',
+
+  'reading-mcq':'reading-mcq.html',
+  'reading-blanks':'reading-blanks.html',
+  'reading-reorder':'reading-reorder.html',
+  'reading-comprehension':'reading-comprehension.html',
+
+  'listening-mcq':'listening-mcq.html',
+  'listening-blanks':'listening-blanks.html',
+  'dictation':'dictation.html',
+
+  'sentence-writing':'sentence-writing.html',
+  'email-writing':'email-writing.html',
+  'letter-writing':'letter-writing.html',
+  'essay-writing':'essay-writing.html',
+  'summary-writing':'summary-writing.html',
+
+  'tenses':'tenses.html',
+  'articles':'articles.html',
+  'prepositions':'prepositions.html',
+  'voice':'voice.html',
+  'conditionals':'conditionals.html',
+  'sentence-structure':'sentence-structure.html',
+
+  'synonyms':'synonyms.html',
+  'antonyms':'antonyms.html',
+  'collocations':'collocations.html',
+  'phrasal-verbs':'phrasal-verbs.html',
+  'idioms':'idioms.html',
+
+  'mock-test':'mock-test.html'
+};
+
+/*
+ * Phase 2 pages that already exist in this project.
+ * Repeat Sentence is included so the dashboard is ready for it
+ * if repeat-sentence.html is present.
+ */
+const ACTIVE_ROUTES = new Set(['read-aloud','repeat-sentence']);
+
+const fallbackModules = [
+  {id:'speaking',icon:'speaking',title:'Speaking',subtitle:'Build confidence and fluency',
+   items:[
+    {id:'read-aloud',icon:'📖',title:'Read Aloud'},
+    {id:'repeat-sentence',icon:'🎧',title:'Repeat Sentence'},
+    {id:'describe-image',icon:'🖼️',title:'Describe Image'},
+    {id:'retell-talk',icon:'🎤',title:'Retell Talk'},
+    {id:'short-answer',icon:'💬',title:'Short Answer'}
+   ]},
+  {id:'reading',icon:'reading',title:'Reading',subtitle:'Comprehension and vocabulary',
+   items:[
+    {id:'reading-mcq',icon:'☑️',title:'Reading MCQ'},
+    {id:'reading-blanks',icon:'🧩',title:'Fill in the Blanks'},
+    {id:'reading-reorder',icon:'🔀',title:'Re-order Paragraphs'},
+    {id:'reading-comprehension',icon:'📄',title:'Comprehension'}
+   ]},
+  {id:'listening',icon:'listening',title:'Listening',subtitle:'Listen, understand and respond',
+   items:[
+    {id:'listening-mcq',icon:'☑️',title:'Listening MCQ'},
+    {id:'dictation',icon:'⌨️',title:'Dictation'},
+    {id:'listening-blanks',icon:'🧩',title:'Listening Fill in the Blanks'}
+   ]},
+  {id:'writing',icon:'writing',title:'Writing',subtitle:'Write clearly and naturally',
+   items:[
+    {id:'sentence-writing',icon:'✏️',title:'Sentence Writing'},
+    {id:'email-writing',icon:'✉️',title:'Email Writing'},
+    {id:'letter-writing',icon:'📝',title:'Letter Writing'},
+    {id:'essay-writing',icon:'📄',title:'Essay Writing'},
+    {id:'summary-writing',icon:'📑',title:'Summary Writing'}
+   ]},
+  {id:'grammar',icon:'grammar',title:'Grammar',subtitle:'Strengthen your English foundation',
+   items:[
+    {id:'tenses',icon:'⏱️',title:'Tenses'},
+    {id:'articles',icon:'🔤',title:'Articles'},
+    {id:'prepositions',icon:'📍',title:'Prepositions'},
+    {id:'voice',icon:'🔄',title:'Voice'},
+    {id:'conditionals',icon:'🔀',title:'Conditionals'},
+    {id:'sentence-structure',icon:'🏗️',title:'Sentence Structure'}
+   ]},
+  {id:'vocabulary',icon:'vocabulary',title:'Vocabulary',subtitle:'Grow useful vocabulary',
+   items:[
+    {id:'synonyms',icon:'🔗',title:'Synonyms'},
+    {id:'antonyms',icon:'↔️',title:'Antonyms'},
+    {id:'collocations',icon:'🧱',title:'Collocations'},
+    {id:'phrasal-verbs',icon:'💡',title:'Phrasal Verbs'},
+    {id:'idioms',icon:'💬',title:'Idioms'}
+   ]}
+];
+
+let data={modules:[]};
+
+function iconSvg(type){
+  const common='viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"';
+  if(type==='speaking') return `<svg ${common}><circle cx="16" cy="9" r="5"/><path d="M6 28c1-6 5-9 10-9s9 3 10 9"/></svg>`;
+  if(type==='reading') return `<svg ${common}><path d="M5 7c4-2 8-2 11 1v19c-3-3-7-3-11-1z"/><path d="M27 7c-4-2-8-2-11 1v19c3-3 7-3 11-1z"/></svg>`;
+  if(type==='listening') return `<svg ${common}><path d="M6 17v-2a10 10 0 0 1 20 0v2"/><path d="M6 17h4v8H7a1 1 0 0 1-1-1z"/><path d="M26 17h-4v8h3a1 1 0 0 0 1-1z"/><path d="M22 26c-1 2-4 3-7 3"/></svg>`;
+  if(type==='writing') return `<svg ${common}><path d="m5 23-1 5 5-1L25 11l-4-4z"/><path d="m18 8 4 4"/><path d="M5 5h10"/></svg>`;
+  if(type==='grammar') return `<svg ${common}><rect x="6" y="3" width="20" height="26" rx="3"/><path d="M10 9h12M10 15h12M10 21h7"/></svg>`;
+  if(type==='vocabulary') return `<svg ${common}><path d="M16 27c-4-4-9-4-12-2V6c4-2 8-1 12 2z"/><path d="M16 27c4-4 9-4 12-2V6c-4-2-8-1-12 2z"/><path d="M10 11h3M10 15h4"/></svg>`;
+  return '';
+}
+
+function jsonp(action){
+  return new Promise((resolve,reject)=>{
+    const cb='pte_dash_'+Date.now()+'_'+Math.floor(Math.random()*9999);
+    const script=document.createElement('script');
+    const timer=setTimeout(()=>{cleanup();reject(new Error('Backend timeout.'))},15000);
+    window[cb]=result=>{cleanup();resolve(result)};
+    script.onerror=()=>{cleanup();reject(new Error('Backend connection failed.'))};
+    script.src=API_URL+'?action='+encodeURIComponent(action)+'&callback='+encodeURIComponent(cb)+'&t='+Date.now();
+    document.body.appendChild(script);
+    function cleanup(){clearTimeout(timer);delete window[cb];script.remove();}
+  });
+}
+
+async function load(){
+  try{
+    const d=await jsonp('modules');
+    if(!d?.ok) throw Error(d?.error||'Modules could not be loaded.');
+    data.modules=d.modules||fallbackModules;
+    render();
+    online(true);
+    try{
+      const s=await jsonp('stats');
+      if(s?.ok){
+        attempts.textContent=Number(s.attempts||0);
+        avg.textContent=s.average?Number(s.average)+'/90':'—';
+        best.textContent=s.best?Number(s.best)+'/90':'—';
+      }
+    }catch(e){console.warn(e)}
+  }catch(e){
+    data.modules=fallbackModules;
+    render();
+    online(false);
+    toast('Dashboard is using its local module map. '+e.message);
+  }
+}
+
+function render(){
+  grid.innerHTML=data.modules.map(m=>`
+    <div class="module">
+      <div class="moduleTop">
+        <div class="moduleIcon">${iconSvg(m.icon)}</div>
+        <div><h3>${esc(m.title)}</h3><p>${esc(m.subtitle||'')}</p></div>
+      </div>
+      <div class="items">${(m.items||[]).map(x=>{
+        const active=ACTIVE_ROUTES.has(x.id||'') && ROUTES[x.id||''];
+        return `<div class="item ${active?'':'disabled'}"
+          ${active?'data-route="'+esc(ROUTES[x.id])+'"':''}>
+          <span class="itemIcon">${esc(x.icon||'•')}</span>
+          <span>${esc(x.title||'Practice')}</span>
+          <span class="badge ${active?'live':''}">${active?'Practice':'Soon'}</span>
+        </div>`;
+      }).join('')}</div>
+    </div>`).join('');
+
+  grid.querySelectorAll('[data-route]').forEach(el=>{
+    el.addEventListener('click',()=>openRoute(el.dataset.route));
+  });
+  progressCount.textContent=ACTIVE_ROUTES.size;
+  fill.style.width=Math.min(100,Math.round(ACTIVE_ROUTES.size/26*100))+'%';
+}
+
+function openRoute(route){ if(route) location.href=route; else toast('This module is planned for a future phase.'); }
+function online(ok){
+  statusDot.className='statusDot '+(ok?'ok':'bad');
+  statusText.textContent=ok?'Backend connected':'Backend unavailable';
+}
+function go(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'});}
+function toast(msg){const e=document.getElementById('toast');e.textContent=msg;e.style.display='block';clearTimeout(window.__toast);window.__toast=setTimeout(()=>e.style.display='none',3200);}
+function esc(x){return String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+document.querySelectorAll('[data-target]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.target)));
+document.getElementById('readBtn').addEventListener('click',()=>openRoute(ROUTES['read-aloud']));
+load();
+</script>
+</body>
+</html>
